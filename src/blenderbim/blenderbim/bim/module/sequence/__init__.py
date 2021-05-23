@@ -91,6 +91,8 @@ def register():
     bpy.types.Scene.BIMWorkScheduleProperties = bpy.props.PointerProperty(type=prop.BIMWorkScheduleProperties)
     bpy.types.Scene.BIMTaskTreeProperties = bpy.props.PointerProperty(type=prop.BIMTaskTreeProperties)
     bpy.types.Scene.BIMWorkCalendarProperties = bpy.props.PointerProperty(type=prop.BIMWorkCalendarProperties)
+    bpy.types.Scene.datepicker_display_date = bpy.props.StringProperty()
+    bpy.types.Scene.datepicker_selected_date = bpy.props.StringProperty()
     bpy.types.TOPBAR_MT_file_import.append(menu_func_import)
 
 
@@ -99,4 +101,6 @@ def unregister():
     del bpy.types.Scene.BIMWorkScheduleProperties
     del bpy.types.Scene.BIMTaskTreeProperties
     del bpy.types.Scene.BIMWorkCalendarProperties
+    del bpy.types.Scene.datepicker_display_date
+    del bpy.types.Scene.datepicker_selected_date
     bpy.types.TOPBAR_MT_file_import.remove(menu_func_import)

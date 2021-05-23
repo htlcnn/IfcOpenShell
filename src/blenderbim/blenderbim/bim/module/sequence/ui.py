@@ -2,6 +2,8 @@ import isodate
 from bpy.types import Panel, UIList
 from blenderbim.bim.ifc import IfcStore
 from ifcopenshell.api.sequence.data import Data
+import blenderbim.bim.module.sequence.helper as helper
+from datetime import datetime
 
 
 class BIM_PT_work_plans(Panel):
@@ -133,6 +135,13 @@ class BIM_PT_work_schedules(Panel):
 
     def draw_visualisation_ui(self):
         row = self.layout.row(align=True)
+        target_prop = helper.get_scene_prop("BIMWorkScheduleProperties.visualisation_start")
+        op = row.operator("bim.datepicker", text=target_prop, icon="REW")
+        op.target_prop = target_prop or helper.canonicalise_time(datetime.now())
+        target_prop = helper.get_scene_prop("BIMWorkScheduleProperties.visualisation_finish")
+        if target_prop is None:
+            target_prop = helper.canonicalise_time(datetime.now())
+        row.operator("bim.datepicker", text=target_prop, icon="FF")
         row.prop(self.props, "visualisation_start", text="", icon="REW")
         row.prop(self.props, "visualisation_finish", text="", icon="FF")
         op = row.operator("bim.visualise_work_schedule_date", text="", icon="RESTRICT_RENDER_OFF")
